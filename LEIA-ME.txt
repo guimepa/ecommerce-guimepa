@@ -1,0 +1,6 @@
+Arquivos desta atualização:
+- index.html
+- transportadoras-data.js
+- Transportadoras.xlsx (fonte dos dados)
+
+Mantenha a pasta logos-transportes no GitHub com os arquivos de imagem indicados na planilha.
