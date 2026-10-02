@@ -1,0 +1,17 @@
+Coloque nesta pasta os arquivos de logo com estes nomes exatos (minusculos):
+
+amazon.png
+leroy.png
+livelo.png
+ll.png
+loja.png
+magalu.png
+meli.png
+senff.png
+shopee.png
+shophub.png
+site.png
+tiktok.png
+webcontinental.png
+
+O HTML tambem tenta localizar os mesmos arquivos na raiz do repositorio e com extensao .PNG.
