@@ -385,5 +385,45 @@ const crossDockingData = [
     "operador": "ACIMA",
     "preco": 1000,
     "custo": 606
+  },
+  {
+    "ordem": 45,
+    "fornecedor": "BRINOX",
+    "marca": "BRINOX",
+    "image": "Brinox.png",
+    "prazo": 11,
+    "operador": "GERAL",
+    "preco": null,
+    "custo": null
+  },
+  {
+    "ordem": 46,
+    "fornecedor": "CHIAPERINI",
+    "marca": "CHIAPERINI",
+    "image": "Chiaperini.png",
+    "prazo": 9,
+    "operador": "GERAL",
+    "preco": null,
+    "custo": null
+  },
+  {
+    "ordem": 47,
+    "fornecedor": "LYNUS",
+    "marca": "LYNUS",
+    "image": "LYNUS.png",
+    "prazo": 4,
+    "operador": "GERAL",
+    "preco": null,
+    "custo": null
+  },
+  {
+    "ordem": 48,
+    "fornecedor": "TRAPP",
+    "marca": "TRAPP",
+    "image": "Trapp.png",
+    "prazo": 10,
+    "operador": "GERAL",
+    "preco": null,
+    "custo": null
   }
 ];

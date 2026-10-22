@@ -28,6 +28,8 @@ Atalhos:
 | `acoes-data.js` | Histórico de ações. |
 | `campanhas-data.js` | Campanhas coparticipadas. |
 | `crossdocking-data.js` | Regras de cross docking por fornecedor. |
+| `crossdocking-prazos-data.js` | Base de OCs do Cross Docking (OC, NF, emissões, entrada no estoque, itens, financeiro). |
+| `crossdocking-config.js` | Configurações protegidas do Cross Docking (hash SHA-256 da senha de edição dos níveis). |
 | `foco-comercial-data.js` | Rotinas semanais de foco comercial (agenda + resumo por rotina). |
 | `fornecedores-data.js` | Condições comerciais dos fornecedores. |
 | `transportadoras-data.js` | Transportadoras e cobertura. |
@@ -45,6 +47,34 @@ Ao gerar um novo arquivo:
 2. Datas sempre no formato `AAAA-MM-DD`.
 3. Para `descontoMarketplace` (campanhas) use número; a string `"por sku"` é aceita mas impede somas.
 4. Para `canal` use o mesmo nome já existente — as grafias alternativas são reunidas em `canais-data.js`.
+
+## Cross Docking
+
+Sub-abas do módulo:
+
+| Sub-aba | Conteúdo |
+|---|---|
+| **Visão Geral** | Comparação entre nível configurado e média real por fornecedor/marca. |
+| **Análise OC** | Prova real OC → NF → Estoque: número da OC e da NF, datas (dd/mm/aaaa), dias de cada etapa, dias totais e financeiro. Filtros por fornecedor, marca, OC, NF, períodos e faixas de dias. |
+| **Configuração de Prazos** | Níveis de corte (dias) por fornecedor e condição de pagamento, com a média real da base ao lado. |
+| **Desempenho Logístico** | Indicadores de aderência dos fornecedores aos prazos. |
+
+Edição dos níveis: botão ✎ no cartão → exige a senha (só o hash SHA-256 fica em `crossdocking-config.js`)
+e um **motivo** de até 60 caracteres. Cada alteração grava data/hora, valor anterior, autor e motivo no
+histórico (recolhido por padrão) e fica no `localStorage` do navegador. A toolbar permite **exportar** os
+níveis (gera `crossdocking-overrides.json`) e **restaurar** os valores originais do arquivo — a restauração
+também exige a mesma senha.
+
+### Atualizar a base do Cross Docking
+
+```
+python tools/update-crossdocking.py ["caminho\Cross Docking Prazos Fornecedor.xlsx"]
+```
+
+O script lê a planilha (fonte da verdade) e regrava `crossdocking-prazos-data.js`. Em `crossdocking-data.js`
+ele preserva os níveis já configurados, aplica `crossdocking-overrides.json` (se existir) e inclui
+fornecedores novos com prazo inicial = média real arredondada para cima. A classificação
+CASA/FERRAMENTAS da Tramontina é herdada do JS anterior; registros novos usam heurística por volume de itens.
 
 ## Convenções importantes
 

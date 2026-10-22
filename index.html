@@ -1112,6 +1112,84 @@
   @media(max-width:900px){.log-period-row{grid-template-columns:1fr}}
   @media(max-width:720px){.log-hero{align-items:flex-start;flex-direction:column;padding:18px}.log-hero-stats{align-self:stretch;grid-template-columns:repeat(3,minmax(0,1fr))}.log-hero-copy h2{font-size:22px}.log-kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.log-supplier-track{grid-template-columns:repeat(4,minmax(0,1fr))}.log-topoc-row{grid-template-columns:92px minmax(0,1fr) 64px}.log-topoc-oc{font-size:11px}}
 
+  /* ===== Cross Docking: Análise OC (prova real) ===== */
+  .an-filters{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:14px;padding-top:14px;border-top:1px solid #eef2f7}
+  .an-field{display:flex;flex-direction:column;gap:5px;min-width:0}
+  .an-field-label{font-size:10px;font-weight:800;color:#64748b;text-transform:uppercase;letter-spacing:.05em}
+  .an-field input,.an-field select{width:100%;min-height:36px;border:1px solid #e2e8f0;border-radius:9px;background:#fff;padding:6px 9px;color:#334155;font:600 12px Roboto,sans-serif;outline:none}
+  .an-field input:focus,.an-field select:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+  .an-pair{display:flex;align-items:center;gap:6px}
+  .an-pair span{color:#94a3b8;font-size:11px;font-weight:700}
+  .an-table-wrap{overflow:auto;-webkit-overflow-scrolling:touch;max-height:68vh;border:1px solid #eef2f7;border-radius:12px}
+  .an-table{width:100%;border-collapse:collapse;font-size:12px;min-width:1260px}
+  .an-table th{position:sticky;top:0;z-index:2;background:#cdd8e6;color:#0f172a;text-transform:uppercase;letter-spacing:.5px;font-size:11.5px;padding:12px;text-align:center;border-bottom:2px solid #a9b8cc;font-weight:900;white-space:nowrap}
+  .an-table td{padding:9px 12px;border-bottom:1px solid #eef2f7;vertical-align:middle;color:#334155;text-align:center}
+  .an-table tbody tr:hover td{background:#f8fafc}
+  .an-table .an-num{font-variant-numeric:tabular-nums;white-space:nowrap;text-align:center}
+  .an-table .an-days{font-weight:850;text-align:center;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .an-table .an-days.good{color:#15803d}
+  .an-table .an-days.warn{color:#b45309}
+  .an-table .an-days.bad{color:#b91c1c}
+  .an-table .an-total{font-weight:900;color:#0f172a}
+  .an-fornecedor{display:flex;align-items:center;justify-content:center;gap:9px;min-width:0}
+
+  .an-fornecedor img{max-width:74px;max-height:26px;object-fit:contain;flex:0 0 auto}
+  .an-fornecedor span{font-size:11px;font-weight:800;color:#1e293b;text-transform:uppercase;letter-spacing:.03em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .an-fornecedor small{display:block;font-size:9.5px;font-weight:650;color:#94a3b8;text-transform:none;letter-spacing:0;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .an-pager{display:flex;align-items:center;gap:10px;justify-content:flex-end;flex-wrap:wrap;padding-top:12px;margin-top:4px;border-top:1px solid #eef2f7;font-size:11px;font-weight:700;color:#64748b}
+  .an-pager button{border:1px solid #e2e8f0;background:#fff;color:#52677d;font:800 11px Roboto,sans-serif;padding:6px 12px;border-radius:9px;cursor:pointer}
+  .an-pager button:disabled{opacity:.45;cursor:not-allowed}
+  .an-pager select{min-height:32px;border:1px solid #e2e8f0;border-radius:9px;background:#fff;padding:4px 8px;font:700 11px Roboto,sans-serif;color:#52677d}
+  .an-pager .an-page-info{margin-right:auto}
+  @media(max-width:1100px){.an-filters{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:620px){.an-filters{grid-template-columns:1fr}}
+
+  /* ===== Cross Docking: edição protegida de níveis de corte ===== */
+  .cxd-toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 14px;padding:11px 14px;background:#fff;border:1px solid #e2e8f0;border-radius:14px;box-shadow:0 4px 14px rgba(15,23,42,.05)}
+  .cxd-toolbar-note{font-size:11px;color:#64748b;font-weight:650}
+  .cxd-toolbar-note b{color:#0f172a}
+  .cxd-toolbar .clear-btn{min-height:32px;padding:5px 12px;font-size:11px}
+  .crossdocking-level{position:relative;padding-right:34px}
+  .cxd-edit{position:absolute;top:6px;right:8px;width:24px;height:24px;border-radius:7px;border:1px solid #e2e8f0;background:#fff;color:#64748b;font-size:12px;line-height:1;cursor:pointer;display:none;align-items:center;justify-content:center;padding:0}
+  .crossdocking-level:hover .cxd-edit,.crossdocking-level:focus-within .cxd-edit{display:inline-flex}
+  .cxd-edit:hover{border-color:#2563eb;color:#1d4ed8;background:#eff6ff}
+  .crossdocking-level.cxd-edited{background:#f0fdf4;border-color:#bbf7d0}
+  .crossdocking-level.cxd-edited .crossdocking-days strong{color:#15803d}
+  .cxd-history{margin-top:10px;border:1px solid #eef2f7;border-radius:11px;background:#f8fafc;overflow:hidden}
+  .cxd-history>summary{cursor:pointer;padding:9px 12px;font-size:10.5px;font-weight:850;color:#52677d;text-transform:uppercase;letter-spacing:.06em;list-style:none;display:flex;align-items:center;gap:8px}
+  .cxd-history>summary::-webkit-details-marker{display:none}
+  .cxd-history>summary::before{content:'▸';font-size:10px;color:#94a3b8;transition:transform .15s}
+  .cxd-history[open]>summary::before{transform:rotate(90deg)}
+  .cxd-history>summary:hover{color:#1d4ed8;background:#f1f5f9}
+  .cxd-history-list{padding:0 12px 10px;display:flex;flex-direction:column;gap:6px}
+  .cxd-history-item{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:11px;color:#475569;background:#fff;border:1px solid #eef2f7;border-radius:8px;padding:6px 9px}
+  .cxd-history-item b{color:#0f172a}
+  .cxd-history-item .cxd-arrow{color:#94a3b8}
+  .cxd-history-motivo{flex:1 1 100%;font-size:10.5px;font-weight:750;color:#1d4ed8;background:#eff6ff;border:1px solid #dbeafe;border-radius:7px;padding:3px 7px;overflow:hidden;text-overflow:ellipsis}
+  .cxd-history-empty{font-size:11px;color:#94a3b8;padding:0 12px 10px}
+  .cxd-real{margin-top:9px;font-size:10.5px;color:#64748b;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+  .cxd-real b{color:#0f172a}
+  .cxd-real.warn{color:#b45309}
+  .cxd-real.warn b{color:#b45309}
+  .cxd-modal{position:fixed;inset:0;z-index:9998;display:none;align-items:center;justify-content:center;background:rgba(15,23,42,.55);padding:18px}
+  .cxd-modal.open{display:flex}
+  .cxd-modal-card{width:min(460px,100%);background:#fff;border-radius:16px;box-shadow:0 24px 60px rgba(15,23,42,.35);overflow:hidden}
+  .cxd-modal-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;border-bottom:1px solid #eef2f7}
+  .cxd-modal-title{font-size:15px;font-weight:900;color:#0f172a}
+  .cxd-modal-sub{font-size:11px;color:#64748b;font-weight:650;margin-top:2px}
+  .cxd-modal-close{border:0;background:transparent;font-size:22px;line-height:1;color:#94a3b8;cursor:pointer;padding:0 4px}
+  .cxd-modal-body{padding:18px;display:flex;flex-direction:column;gap:13px}
+  .cxd-modal-foot{display:flex;justify-content:flex-end;gap:10px;padding:14px 18px;border-top:1px solid #eef2f7;background:#f8fafc}
+  .cxd-label{font-size:10px;font-weight:800;color:#64748b;text-transform:uppercase;letter-spacing:.06em}
+  .cxd-input{width:100%;min-height:40px;border:1px solid #e2e8f0;border-radius:9px;padding:8px 11px;font:600 13px Roboto,sans-serif;color:#0f172a;outline:none}
+  .cxd-input:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+  .cxd-modal-error{display:none;font-size:11.5px;font-weight:750;color:#b91c1c}
+  .cxd-modal-error.show{display:block}
+  .cxd-btn{border:1px solid #e2e8f0;background:#fff;color:#52677d;font:800 12px Roboto,sans-serif;padding:9px 16px;border-radius:10px;cursor:pointer}
+  .cxd-btn-primary{background:#2563eb;border-color:#2563eb;color:#fff}
+  .cxd-btn-primary:hover{background:#1d4ed8}
+  .cxd-btn:disabled{opacity:.6;cursor:not-allowed}
+
   .publication-filter-result{margin-left:auto;font-size:11px;font-weight:700;color:var(--muted);white-space:nowrap;}
   .publication-clear-btn{min-height:34px;padding:6px 12px;}
   #combinedContainer:focus-visible{outline:3px solid rgba(37,99,235,.28);outline-offset:-3px;}
@@ -1174,6 +1252,12 @@
   .partners-hero,.partners-subhero{display:none!important}
   .crossdocking-summary-bar{display:flex;justify-content:flex-end;align-items:center;min-height:0;margin:0 0 14px;padding:0;background:transparent;border:0;box-shadow:none}
   .crossdocking-summary-bar .crossdocking-summary{justify-content:flex-end}
+  .cxd-config-head{margin:0 0 16px}
+  .cxd-config-head .crossdocking-summary-bar{margin:0 0 10px}
+  .cxd-config-head .crossdocking-filter-track{padding:12px 14px;background:#fff;border:1px solid #e2e8f0;border-radius:15px;box-shadow:0 4px 14px rgba(15,23,42,.05)}
+  .cxd-config-head .crossdocking-clear-filter{margin-top:10px}
+  @media(max-width:1000px){.cxd-config-head .crossdocking-filter-track{grid-template-columns:repeat(5,minmax(0,1fr));grid-template-rows:repeat(4,50px)}}
+  @media(max-width:700px){.cxd-config-head .crossdocking-filter-track{grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(5,48px)}.cxd-config-head .crossdocking-clear-filter{width:100%}}
   @media(max-width:700px){.crossdocking-summary-bar{justify-content:flex-start}.crossdocking-summary-bar .crossdocking-summary{justify-content:flex-start}}
 
   /* Parceiros */
@@ -1763,7 +1847,8 @@ body{background:var(--app-page);color:var(--app-text);min-height:100vh;padding:0
   <div class="crossdocking-main">
     <div class="cxd-subtabs" role="tablist" aria-label="Seções de Cross Docking">
       <button class="cxd-subtab active" type="button" data-cxd-tab="geral" role="tab" aria-selected="true">Visão Geral</button>
-      <button class="cxd-subtab" type="button" data-cxd-tab="regras" role="tab" aria-selected="false">Prazos Configurados</button>
+      <button class="cxd-subtab" type="button" data-cxd-tab="analise" role="tab" aria-selected="false">Análise OC</button>
+      <button class="cxd-subtab" type="button" data-cxd-tab="regras" role="tab" aria-selected="false">Configura&ccedil;&atilde;o de Prazos</button>
       <button class="cxd-subtab" type="button" data-cxd-tab="logistico" role="tab" aria-selected="false">Desempenho Logístico</button>
     </div>
     <div class="cxd-subpanel active" id="cxd-panel-geral" role="tabpanel">
@@ -1810,11 +1895,117 @@ body{background:var(--app-page);color:var(--app-text);min-height:100vh;padding:0
         <div class="log-chart-body"><div class="log-compare-summary" id="geralSummary"></div></div>
       </div>
     </div>
-    <div class="cxd-subpanel" id="cxd-panel-regras" role="tabpanel">
-      <div class="crossdocking-summary-bar" aria-label="Resumo de Cross Docking">
-        <div class="crossdocking-summary" id="crossDockingSummary"></div>
+
+    <div class="cxd-subpanel" id="cxd-panel-analise" role="tabpanel">
+      <div class="log-hero">
+        <div class="log-hero-copy">
+          <div class="log-eyebrow">Logística &bull; Prova Real</div>
+          <h2>Análise OC</h2>
+          <p>Prova real dos prazos: cada OC com o n&uacute;mero da NF, as datas de emiss&atilde;o (OC e NF), a entrada no estoque e os dias &uacute;teis de cada etapa.</p>
+          <div class="log-uteis-badge">✓ Dias úteis entre as etapas</div>
+        </div>
+        <div class="log-hero-stats" id="analiseHeroStats"></div>
       </div>
-      <div class="crossdocking-filter-bar">
+
+      <div class="log-filter-panel">
+        <div class="log-filter-suppliers">
+          <div class="log-filter-label"><span>Fornecedores</span><button class="clear-btn log-filter-all" id="analiseClearSuppliers" type="button">Todos os fornecedores</button></div>
+          <div class="log-supplier-track" id="analiseSupplierFilters" aria-label="Filtrar fornecedores pela logo"></div>
+        </div>
+
+        <div class="an-filters">
+          <div class="an-field">
+            <span class="an-field-label">Fornecedor</span>
+            <select id="anFornecedor" aria-label="Filtrar por fornecedor"><option value="">Todos</option></select>
+          </div>
+          <div class="an-field">
+            <span class="an-field-label">N&uacute;mero da OC</span>
+            <input type="search" id="anOc" placeholder="Ex.: 53423" aria-label="Filtrar por número da OC">
+          </div>
+          <div class="an-field">
+            <span class="an-field-label">N&uacute;mero da NF</span>
+            <input type="search" id="anNf" placeholder="Ex.: 495538" aria-label="Filtrar por número da NF">
+          </div>
+          <div class="an-field">
+            <span class="an-field-label">Marca</span>
+            <select id="anMarca" aria-label="Filtrar por marca"><option value="">Todas</option></select>
+          </div>
+          <div class="an-field">
+            <span class="an-field-label">Data Emiss&atilde;o OC</span>
+            <div class="an-pair"><input type="date" id="anDeOc" aria-label="Data OC de"><span>→</span><input type="date" id="anAteOc" aria-label="Data OC até"></div>
+          </div>
+          <div class="an-field">
+            <span class="an-field-label">Data Emiss&atilde;o NF</span>
+            <div class="an-pair"><input type="date" id="anDeNf" aria-label="Data NF de"><span>→</span><input type="date" id="anAteNf" aria-label="Data NF até"></div>
+          </div>
+          <div class="an-field">
+            <span class="an-field-label">Entrada no Estoque</span>
+            <div class="an-pair"><input type="date" id="anDeEst" aria-label="Entrada de"><span>→</span><input type="date" id="anAteEst" aria-label="Entrada até"></div>
+          </div>
+          <div class="an-field">
+            <span class="an-field-label">Dias emiss&atilde;o NF</span>
+            <div class="an-pair"><input type="number" id="anMinDiasNf" min="0" placeholder="mín" aria-label="Dias de emissão NF mínimo"><span>→</span><input type="number" id="anMaxDiasNf" min="0" placeholder="máx" aria-label="Dias de emissão NF máximo"></div>
+          </div>
+          <div class="an-field">
+            <span class="an-field-label">Dias entrada Estoque</span>
+            <div class="an-pair"><input type="number" id="anMinDiasEst" min="0" placeholder="mín" aria-label="Dias de entrada no estoque mínimo"><span>→</span><input type="number" id="anMaxDiasEst" min="0" placeholder="máx" aria-label="Dias de entrada no estoque máximo"></div>
+          </div>
+        </div>
+
+        <div class="log-filter-actions">
+          <button class="clear-btn" id="anClearFilters" type="button">Limpar todos os filtros</button>
+          <span class="log-result-count" id="anResultCount"></span>
+        </div>
+      </div>
+
+      <div class="section log-chart-card log-full">
+        <div class="section-header"><span class="section-title">Registros OC &rarr; NF &rarr; Estoque</span><span class="log-card-hint">Emissão OC &rarr; emissão NF &rarr; entrada no estoque, com os dias de cada etapa</span></div>
+        <div class="log-chart-body">
+          <div class="an-table-wrap">
+            <table class="an-table">
+              <thead>
+                <tr>
+                  <th>Fornecedor</th>
+                  <th>N&ordm; OC</th>
+                  <th>N&ordm; NF</th>
+                  <th>Data Emiss&atilde;o OC</th>
+                  <th>Data Emiss&atilde;o NF</th>
+                  <th>Entrada no Estoque</th>
+                  <th>Dias emiss&atilde;o NF</th>
+                  <th>Dias entrada Estoque</th>
+                  <th>Dias Totais (NF + Estoque)</th>
+                </tr>
+              </thead>
+              <tbody id="anBody"></tbody>
+            </table>
+          </div>
+          <div class="an-pager">
+            <span class="an-page-info" id="anPageInfo"></span>
+            <label style="font-size:11px;font-weight:700;color:#64748b">Por p&aacute;gina
+              <select id="anPageSize" aria-label="Registros por página">
+                <option value="50">50</option>
+                <option value="100" selected>100</option>
+                <option value="250">250</option>
+                <option value="500">500</option>
+              </select>
+            </label>
+            <button id="anPrev" type="button">&larr; Anterior</button>
+            <button id="anNext" type="button">Pr&oacute;xima &rarr;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cxd-subpanel" id="cxd-panel-regras" role="tabpanel">
+      <div class="cxd-toolbar">
+        <span class="cxd-toolbar-note">N&iacute;veis de corte edit&aacute;veis com senha &middot; cada altera&ccedil;&atilde;o fica registrada no <b>Hist&oacute;rico</b> de cada fornecedor</span>
+        <button class="clear-btn" id="cxdExportNiveis" type="button">Exportar configura&ccedil;&atilde;o</button>
+        <button class="clear-btn" id="cxdResetNiveis" type="button">Restaurar n&iacute;veis da base</button>
+      </div>
+      <div class="cxd-config-head">
+        <div class="crossdocking-summary-bar" aria-label="Resumo de Cross Docking">
+          <div class="crossdocking-summary" id="crossDockingSummary"></div>
+        </div>
         <div class="crossdocking-filter-track" id="crossDockingSupplierFilters" aria-label="Filtrar fornecedores pela logo"></div>
         <button class="clear-btn crossdocking-clear-filter" id="clearCrossDockingFilters" type="button">Limpar Filtros</button>
       </div>
@@ -1969,6 +2160,37 @@ body{background:var(--app-page);color:var(--app-text);min-height:100vh;padding:0
   </div>
 </div>
 
+<div class="cxd-modal" id="cxdEditModal" role="dialog" aria-modal="true" aria-labelledby="cxdEditTitle">
+  <div class="cxd-modal-card">
+    <div class="cxd-modal-head">
+      <div>
+        <div class="cxd-modal-title" id="cxdEditTitle">Editar n&iacute;vel de corte</div>
+        <div class="cxd-modal-sub" id="cxdEditSub"></div>
+      </div>
+      <button class="cxd-modal-close" id="cxdEditClose" type="button" aria-label="Fechar">&times;</button>
+    </div>
+    <div class="cxd-modal-body">
+      <div class="an-field" id="cxdEditValorWrap">
+        <span class="cxd-label">Novo n&iacute;vel (dias &uacute;teis)</span>
+        <input class="cxd-input" type="number" id="cxdEditValor" min="0" max="60" step="1">
+      </div>
+      <div class="an-field" id="cxdEditMotivoWrap">
+        <span class="cxd-label">Motivo da altera&ccedil;&atilde;o (m&aacute;x. 60 caracteres)</span>
+        <input class="cxd-input" type="text" id="cxdEditMotivo" maxlength="60" autocomplete="off" placeholder="Ex.: prazo renegociado com o fornecedor">
+      </div>
+      <div class="an-field">
+        <span class="cxd-label">Senha de edi&ccedil;&atilde;o</span>
+        <input class="cxd-input" type="password" id="cxdEditSenha" autocomplete="off" placeholder="Informe a senha">
+      </div>
+      <div class="cxd-modal-error" id="cxdEditErro">Senha incorreta ou valor inv&aacute;lido.</div>
+    </div>
+    <div class="cxd-modal-foot">
+      <button class="cxd-btn" id="cxdEditCancel" type="button">Cancelar</button>
+      <button class="cxd-btn cxd-btn-primary" id="cxdEditSave" type="button">Salvar n&iacute;vel</button>
+    </div>
+  </div>
+</div>
+
 
 
 <script src="assistencia-tecnica-data.js"></script>
@@ -2054,6 +2276,7 @@ body{background:var(--app-page);color:var(--app-text);min-height:100vh;padding:0
 <script src="campanhas-data.js"></script>
 <script src="crossdocking-data.js"></script>
 <script src="crossdocking-prazos-data.js"></script>
+<script src="crossdocking-config.js"></script>
 <script src="foco-comercial-data.js"></script>
 <script>
 // ============ FOCO COMERCIAL ============
@@ -3067,9 +3290,183 @@ initCampaigns();
 
 
 <script>
+/* ===== NÚCLEO COMPARTILHADO DO CROSS DOCKING =====
+   Níveis de corte (edição protegida + histórico) e utilidades de análise. */
+(function(){
+  const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+  const money=v=>Number(v||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL',minimumFractionDigits:2});
+
+  /* ---------- SHA-256 (valida a senha de edição dos níveis de corte) ---------- */
+  const SHA_K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+  const rotr=(v,n)=>(v>>>n)|(v<<(32-n));
+  /* UTF-8 sem depender de TextEncoder (o portal roda em browsers e em file://). */
+  function utf8Bytes(str){
+    const out=[];
+    for(let i=0;i<str.length;i++){
+      let c=str.charCodeAt(i);
+      if(c<0x80){out.push(c);continue;}
+      if(c<0x800){out.push(0xC0|(c>>6),0x80|(c&63));continue;}
+      if(c>=0xD800&&c<=0xDBFF&&i+1<str.length){
+        const c2=str.charCodeAt(i+1);
+        const cp=0x10000+((c-0xD800)<<10)+(c2-0xDC00);
+        i++;
+        out.push(0xF0|(cp>>18),0x80|((cp>>12)&63),0x80|((cp>>6)&63),0x80|(cp&63));
+        continue;
+      }
+      out.push(0xE0|(c>>12),0x80|((c>>6)&63),0x80|(c&63));
+    }
+    return out;
+  }
+  function sha256Hex(message){
+    const data=utf8Bytes(String(message));
+    const len=data.length;
+    const buf=new Uint8Array((((len+9)>>6)+1)*64);
+    for(let i=0;i<len;i++) buf[i]=data[i];
+    buf[len]=0x80;
+    const dv=new DataView(buf.buffer);
+    const bits=len*8;
+    dv.setUint32(buf.length-8,Math.floor(bits/0x100000000));
+    dv.setUint32(buf.length-4,bits>>>0);
+    const h=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+    const w=new Uint32Array(64);
+    for(let off=0;off<buf.length;off+=64){
+      for(let i=0;i<16;i++) w[i]=dv.getUint32(off+i*4);
+      for(let i=16;i<64;i++){
+        const s0=rotr(w[i-15],7)^rotr(w[i-15],18)^(w[i-15]>>>3);
+        const s1=rotr(w[i-2],17)^rotr(w[i-2],19)^(w[i-2]>>>10);
+        w[i]=(w[i-16]+s0+w[i-7]+s1)>>>0;
+      }
+      let a=h[0],b=h[1],c=h[2],d=h[3],e=h[4],f=h[5],g=h[6],x=h[7];
+      for(let i=0;i<64;i++){
+        const s1=rotr(e,6)^rotr(e,11)^rotr(e,25);
+        const ch=(e&f)^((~e)&g);
+        const t1=(x+s1+ch+SHA_K[i]+w[i])>>>0;
+        const s0=rotr(a,2)^rotr(a,13)^rotr(a,22);
+        const maj=(a&b)^(a&c)^(b&c);
+        const t2=(s0+maj)>>>0;
+        x=g; g=f; f=e; e=(d+t1)>>>0; d=c; c=b; b=a; a=(t1+t2)>>>0;
+      }
+      h[0]=(h[0]+a)>>>0;h[1]=(h[1]+b)>>>0;h[2]=(h[2]+c)>>>0;h[3]=(h[3]+d)>>>0;
+      h[4]=(h[4]+e)>>>0;h[5]=(h[5]+f)>>>0;h[6]=(h[6]+g)>>>0;h[7]=(h[7]+x)>>>0;
+    }
+    return h.map(v=>v.toString(16).padStart(8,'0')).join('');
+  }
+
+  /* ---------- dias úteis ---------- */
+  const pld=s=>{const p=String(s).split('-').map(Number);return new Date(p[0],p[1]-1,p[2]);};
+  const dayDiff=(a,b)=>{const s=pld(b),e=pld(a);let n=0,d=new Date(s);d.setDate(d.getDate()+1);while(d<=e){const w=d.getDay();if(w!==0&&w!==6)n++;d.setDate(d.getDate()+1);}return n;};
+
+  /* ---------- armazenamento dos níveis editados ---------- */
+  const STORE_KEY='crossdocking:niveis';
+  const levelKey=row=>String(row.fornecedor)+'::'+String(row.ordem);
+  function loadStore(){
+    try{
+      const raw=JSON.parse(localStorage.getItem(STORE_KEY)||'{}');
+      return {niveis:(raw&&typeof raw.niveis==='object'&&raw.niveis)?raw.niveis:{}};
+    }catch(e){return {niveis:{}};}
+  }
+  function saveStore(store){
+    try{localStorage.setItem(STORE_KEY,JSON.stringify(store));}catch(e){}
+  }
+  function descricaoRegra(row){
+    const op=String(row.operador||'').toUpperCase();
+    if(!row.preco||!row.custo||op==='GERAL'||op.includes('PRODU')) return op.includes('PRODU')?'Produtos em produção':'Regra geral';
+    return (op==='ABAIXO'?'Abaixo de ':'A partir de ')+money(row.preco);
+  }
+  function nivelAtual(row){
+    const store=loadStore();
+    const item=store.niveis[levelKey(row)];
+    return (item&&item.prazo!=null)?Number(item.prazo):Number(row.prazo);
+  }
+  function historicoFornecedor(fornecedor){
+    const store=loadStore();
+    const out=[];
+    Object.keys(store.niveis).forEach(k=>{
+      if(k.indexOf(String(fornecedor)+'::')!==0) return;
+      const item=store.niveis[k];
+      if(!item||!Array.isArray(item.historico)) return;
+      item.historico.forEach(h=>out.push(Object.assign({},h,{chave:k})));
+    });
+    out.sort((a,b)=>String(b.data).localeCompare(String(a.data)));
+    return out;
+  }
+  function senhaConfere(senha){
+    const esperado=String(typeof crossDockingSenhaHash!=='undefined'?crossDockingSenhaHash:'').toLowerCase();
+    if(!esperado) return false;
+    return sha256Hex(senha)===esperado;
+  }
+  function verificarSenha(senha){
+    const esperado=String(typeof crossDockingSenhaHash!=='undefined'?crossDockingSenhaHash:'');
+    if(!esperado) return {ok:false,erro:'Senha de edição não configurada.'};
+    return senhaConfere(senha)?{ok:true}:{ok:false,erro:'Senha incorreta.'};
+  }
+  function salvarNivel(row,novoPrazo,senha,motivo){
+    const check=verificarSenha(senha);
+    if(!check.ok) return check;
+    if(!Number.isFinite(novoPrazo)||novoPrazo<0||novoPrazo>60) return {ok:false,erro:'Informe um número válido de dias (0 a 60).'};
+    const store=loadStore();
+    const key=levelKey(row);
+    const item=store.niveis[key]||{prazo:Number(row.prazo),historico:[]};
+    const anterior=item.prazo!=null?Number(item.prazo):Number(row.prazo);
+    if(anterior!==novoPrazo){
+      item.historico=Array.isArray(item.historico)?item.historico:[];
+      item.historico.push({data:new Date().toISOString(),de:anterior,para:novoPrazo,regra:descricaoRegra(row),motivo:String(motivo||'').slice(0,60)});
+    }
+    item.prazo=novoPrazo;
+    store.niveis[key]=item;
+    saveStore(store);
+    return {ok:true};
+  }
+  function restaurarNiveis(){
+    try{localStorage.removeItem(STORE_KEY);}catch(e){}
+  }
+  function exportarNiveis(){
+    const store=loadStore();
+    const niveis=Object.keys(store.niveis).map(k=>{
+      const parts=k.split('::');
+      return {fornecedor:parts[0],ordem:Number(parts[1]),prazo:store.niveis[k].prazo};
+    });
+    return JSON.stringify({versao:1,exportadoEm:new Date().toISOString(),niveis},null,2);
+  }
+  function formatarDataHora(iso){
+    const d=new Date(iso);
+    if(isNaN(d.getTime())) return String(iso);
+    return d.toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',year:'2-digit',hour:'2-digit',minute:'2-digit'});
+  }
+
+  /* ---------- desempenho real (base Cross Docking Prazos Fornecedor.xlsx) ---------- */
+  let realCache=null;
+  function realRows(){
+    if(realCache) return realCache;
+    const out=[];
+    const base=typeof crossDockingPrazosData!=='undefined'?crossDockingPrazosData:[];
+    base.forEach(r=>{
+      if(!(r.dataOc&&r.dataNf&&r.dataEstoque)) return;
+      const a=dayDiff(r.dataNf,r.dataOc),b=dayDiff(r.dataEstoque,r.dataNf),t=dayDiff(r.dataEstoque,r.dataOc);
+      if(a<0||b<0||t>30) return;
+      out.push({marca:r.marca||'',logo:String(r.logo||'').toLowerCase(),fornecedor:r.fornecedor||'',a,b,t});
+    });
+    realCache=out;
+    return out;
+  }
+  function realDoFornecedor(fornecedor,image){
+    const nome=String(fornecedor||'').toUpperCase();
+    const img=String(image||'').toLowerCase();
+    const tram=nome.indexOf('TRAMONTINA')===0;
+    const rows=realRows().filter(r=>tram?String(r.marca).toUpperCase().indexOf('TRAMONTINA')===0:r.logo===img);
+    if(!rows.length) return null;
+    const avg=k=>rows.reduce((s,r)=>s+r[k],0)/rows.length;
+    return {n:rows.length,oc:avg('a'),nf:avg('b'),tot:avg('t')};
+  }
+
+  window.cxdCore={esc,money,dayDiff,pld,nivelAtual,historicoFornecedor,salvarNivel,verificarSenha,restaurarNiveis,exportarNiveis,descricaoRegra,formatarDataHora,realDoFornecedor,realRows};
+})();
+</script>
+
+<script>
 (function(){
   const money=v=>Number(v||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL',minimumFractionDigits:2});
-  const esc=v=>String(v??'').replace(/[&<>\"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#039;'}[c]));
+  const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
   let activeSupplier='';
   let allGroups=[];
 
@@ -3084,17 +3481,33 @@ initCampaigns();
   function levelHtml(row){
     const op=(row.operador||'').toUpperCase();
     const general=!row.preco||!row.custo||op==='GERAL'||op.includes('PRODU');
+    const prazo=cxdCore.nivelAtual(row);
+    const edited=prazo!==Number(row.prazo);
+    const editBtn=`<button class="cxd-edit" type="button" data-cxd-edit="${esc(row.fornecedor)}" data-cxd-ordem="${esc(row.ordem)}" title="Editar nível de corte (requer senha)" aria-label="Editar nível de corte">✎</button>`;
     if(general){
       const label=op.includes('PRODU')?'Produtos em produção':'Regra geral';
-      return `<div class="crossdocking-level general"><div class="crossdocking-days"><strong>${esc(row.prazo)}</strong><span>dias</span></div><div class="crossdocking-rule"><strong>${esc(label)}</strong><small>Prazo de despacho aplicado ao fornecedor</small></div></div>`;
+      return `<div class="crossdocking-level general${edited?' cxd-edited':''}"><div class="crossdocking-days"><strong>${esc(prazo)}</strong><span>dias</span></div><div class="crossdocking-rule"><strong>${esc(label)}</strong><small>Prazo de despacho aplicado ao fornecedor</small></div>${editBtn}</div>`;
     }
     const condition=op==='ABAIXO'?'Abaixo de':'A partir de';
-    return `<div class="crossdocking-level"><div class="crossdocking-days"><strong>${esc(row.prazo)}</strong><span>dias</span></div><div class="crossdocking-rule"><strong>${condition} ${money(row.preco)}</strong><small>Preço de venda aproximado</small></div><div class="crossdocking-cost"><span>Corte custo</span><strong>${money(row.custo)}</strong></div></div>`;
+    return `<div class="crossdocking-level${edited?' cxd-edited':''}"><div class="crossdocking-days"><strong>${esc(prazo)}</strong><span>dias</span></div><div class="crossdocking-rule"><strong>${esc(condition)} ${money(row.preco)}</strong><small>Preço de venda aproximado</small></div><div class="crossdocking-cost"><span>Corte custo</span><strong>${money(row.custo)}</strong></div>${editBtn}</div>`;
+  }
+  function historyHtml(fornecedor){
+    const itens=cxdCore.historicoFornecedor(fornecedor);
+    if(!itens.length) return `<details class="cxd-history"><summary>Histórico</summary><div class="cxd-history-empty">Nenhuma atualização de nível registrada até agora.</div></details>`;
+    const linhas=itens.map(h=>`<div class="cxd-history-item"><span>${esc(cxdCore.formatarDataHora(h.data))}</span><span class="cxd-arrow">→</span><span><b>${esc(h.de)}</b> dias</span><span class="cxd-arrow">→</span><span><b>${esc(h.para)}</b> dias</span><span>· ${esc(h.regra||'')}</span>${h.motivo?`<span class="cxd-history-motivo" title="${esc(h.motivo)}">Motivo: ${esc(h.motivo)}</span>`:''}</div>`).join('');
+    return `<details class="cxd-history"><summary>Histórico (${itens.length})</summary><div class="cxd-history-list">${linhas}</div></details>`;
+  }
+  function realHtml(fornecedor,image){
+    const real=cxdCore.realDoFornecedor(fornecedor,image);
+    if(!real) return `<div class="cxd-real">Sem dados reais na base para este fornecedor.</div>`;
+    const fmt=v=>v.toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1});
+    return `<div class="cxd-real">Média real na base: <b>${fmt(real.tot)} du</b> · OC → NF <b>${fmt(real.oc)}</b> · NF → Estoque <b>${fmt(real.nf)}</b> · <b>${real.n}</b> OCs com ciclo completo</div>`;
   }
   function renderSupplierFilters(){
     const wrap=document.getElementById('crossDockingSupplierFilters');
     if(!wrap) return;
     const priority=['O.V.D','WAP','MAKITA','BOSCH','MTX','TOYAMA','NEGRAO','BRITANIA','TRAMONTINA','CSM'];
+
     const priorityIndex=new Map(priority.map((name,index)=>[name,index]));
     const ordered=[
       ...allGroups.filter(g=>priorityIndex.has(g.fornecedor)).sort((a,b)=>priorityIndex.get(a.fornecedor)-priorityIndex.get(b.fornecedor)),
@@ -3122,18 +3535,125 @@ initCampaigns();
     const groups=activeSupplier?allGroups.filter(g=>g.fornecedor===activeSupplier):allGroups;
     const visibleRows=activeSupplier?crossDockingData.filter(r=>r.fornecedor===activeSupplier):crossDockingData;
     const levels=visibleRows.length;
-    const days=visibleRows.map(r=>Number(r.prazo)).filter(Number.isFinite);
+    const days=visibleRows.map(r=>cxdCore.nivelAtual(r)).filter(Number.isFinite);
     const minDays=days.length?Math.min(...days):0;
     const maxDays=days.length?Math.max(...days):0;
     summary.innerHTML=`<div class="crossdocking-summary-item"><strong>${groups.length}</strong><span>Fornecedores</span></div><div class="crossdocking-summary-item"><strong>${levels}</strong><span>Níveis de corte</span></div><div class="crossdocking-summary-item"><strong>${minDays}</strong><span>Menor prazo</span></div><div class="crossdocking-summary-item"><strong>${maxDays}</strong><span>Maior prazo</span></div>`;
-    grid.innerHTML=groups.map(g=>`<article class="crossdocking-card"><div class="crossdocking-card-head"><div class="crossdocking-logo-box"><img src="logos-marcas/${encodeURI(g.image)}" alt="${esc(g.fornecedor)}" onerror="this.style.display='none'"></div><div class="crossdocking-supplier-name">${esc(g.fornecedor)}</div></div><div class="crossdocking-card-body"><div class="crossdocking-levels-title"><span>Níveis de corte</span><span>${g.niveis.length} ${g.niveis.length===1?'regra':'regras'}</span></div><div class="crossdocking-levels">${g.niveis.slice().sort((a,b)=>a.ordem-b.ordem).map(levelHtml).join('')}</div></div></article>`).join('');
+    grid.innerHTML=groups.map(g=>`<article class="crossdocking-card"><div class="crossdocking-card-head"><div class="crossdocking-logo-box"><img src="logos-marcas/${encodeURI(g.image)}" alt="${esc(g.fornecedor)}" onerror="this.style.display='none'"></div><div class="crossdocking-supplier-name">${esc(g.fornecedor)}</div></div><div class="crossdocking-card-body"><div class="crossdocking-levels-title"><span>Níveis de corte</span><span>${g.niveis.length} ${g.niveis.length===1?'regra':'regras'}</span></div><div class="crossdocking-levels">${g.niveis.slice().sort((a,b)=>a.ordem-b.ordem).map(levelHtml).join('')}</div>${realHtml(g.fornecedor,g.image)}${historyHtml(g.fornecedor)}</div></article>`).join('');
+    grid.querySelectorAll('[data-cxd-edit]').forEach(btn=>btn.addEventListener('click',e=>{
+      e.preventDefault();
+      const row=allGroups.flatMap(g=>g.niveis).find(r=>r.fornecedor===btn.dataset.cxdEdit&&String(r.ordem)===btn.dataset.cxdOrdem);
+      if(row) openEditModal(row);
+    }));
     renderSupplierFilters();
     requestAnimationFrame(syncCardHeights);
   }
+
+  /* ---------- edição protegida por senha ---------- */
+  let pendingEdit=null;
+  let modoReset=false;
+  function setModalMode(reset){
+    modoReset=!!reset;
+    const vw=document.getElementById('cxdEditValorWrap');
+    const mw=document.getElementById('cxdEditMotivoWrap');
+    if(vw) vw.style.display=reset?'none':'';
+    if(mw) mw.style.display=reset?'none':'';
+    const title=document.getElementById('cxdEditTitle');
+    if(title) title.textContent=reset?'Restaurar níveis da base':'Editar nível de corte';
+    const save=document.getElementById('cxdEditSave');
+    if(save) save.textContent=reset?'Restaurar':'Salvar nível';
+  }
+  function openModal(){
+    const senha=document.getElementById('cxdEditSenha');
+    const erro=document.getElementById('cxdEditErro');
+    if(senha) senha.value='';
+    if(erro){erro.textContent='';erro.classList.remove('show');}
+    const modal=document.getElementById('cxdEditModal');
+    if(modal) modal.classList.add('open');
+    const valor=document.getElementById('cxdEditValor');
+    setTimeout(()=>{const alvo=modoReset?senha:valor;if(alvo&&alvo.focus) alvo.focus();},40);
+  }
+  function openEditModal(row){
+    pendingEdit=row;
+    setModalMode(false);
+    const sub=document.getElementById('cxdEditSub');
+    if(sub) sub.textContent=`${row.fornecedor} · ${cxdCore.descricaoRegra(row)} · nível atual: ${cxdCore.nivelAtual(row)} dias`;
+    const valor=document.getElementById('cxdEditValor');
+    const motivo=document.getElementById('cxdEditMotivo');
+    if(valor) valor.value=String(cxdCore.nivelAtual(row));
+    if(motivo) motivo.value='';
+    openModal();
+  }
+  function openResetModal(){
+    pendingEdit=null;
+    setModalMode(true);
+    const sub=document.getElementById('cxdEditSub');
+    if(sub) sub.textContent='Todos os níveis de corte voltam aos valores da base e o histórico é apagado.';
+    openModal();
+  }
+  function closeEditModal(){
+    pendingEdit=null;
+    modoReset=false;
+    const modal=document.getElementById('cxdEditModal');
+    if(modal) modal.classList.remove('open');
+  }
+  function saveEdit(){
+    const erro=document.getElementById('cxdEditErro');
+    const senhaInput=document.getElementById('cxdEditSenha');
+    if(!senhaInput) return;
+    if(modoReset){
+      const check=cxdCore.verificarSenha(senhaInput.value);
+      if(!check.ok){if(erro){erro.textContent=check.erro;erro.classList.add('show');}return;}
+      cxdCore.restaurarNiveis();
+      closeEditModal();
+      renderCrossDocking();
+      if(typeof window.cxdRenderGeral==='function') window.cxdRenderGeral();
+      return;
+    }
+    const valorInput=document.getElementById('cxdEditValor');
+    const motivoInput=document.getElementById('cxdEditMotivo');
+    if(!pendingEdit||!valorInput) return;
+    const valor=Number(valorInput.value);
+    if(!Number.isFinite(valor)||valor<0){if(erro){erro.textContent='Informe um número válido de dias.';erro.classList.add('show');}return;}
+    const motivo=String((motivoInput&&motivoInput.value)||'').trim();
+    if(!motivo){if(erro){erro.textContent='Informe o motivo da alteração (até 60 caracteres).';erro.classList.add('show');}return;}
+    const res=cxdCore.salvarNivel(pendingEdit,valor,senhaInput.value,motivo.slice(0,60));
+    if(!res.ok){if(erro){erro.textContent=res.erro;erro.classList.add('show');}return;}
+    closeEditModal();
+    renderCrossDocking();
+    if(typeof window.cxdRenderGeral==='function') window.cxdRenderGeral();
+  }
+  function downloadNiveis(){
+    const conteudo=cxdCore.exportarNiveis();
+    const blob=new Blob([conteudo],{type:'application/json'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url;
+    a.download='crossdocking-overrides.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(()=>URL.revokeObjectURL(url),1000);
+  }
+
   function initCrossDocking(){
     allGroups=groupRows();
     const clear=document.getElementById('clearCrossDockingFilters');
     if(clear) clear.addEventListener('click',()=>{activeSupplier='';renderCrossDocking();});
+    const modal=document.getElementById('cxdEditModal');
+    if(modal) modal.addEventListener('click',e=>{if(e.target===modal) closeEditModal();});
+    const closeBtn=document.getElementById('cxdEditClose');
+    if(closeBtn) closeBtn.addEventListener('click',closeEditModal);
+    const cancelBtn=document.getElementById('cxdEditCancel');
+    if(cancelBtn) cancelBtn.addEventListener('click',closeEditModal);
+    const saveBtn=document.getElementById('cxdEditSave');
+    if(saveBtn) saveBtn.addEventListener('click',saveEdit);
+    const senhaInput=document.getElementById('cxdEditSenha');
+    if(senhaInput) senhaInput.addEventListener('keydown',e=>{if(e.key==='Enter') saveEdit();});
+    const exportBtn=document.getElementById('cxdExportNiveis');
+    if(exportBtn) exportBtn.addEventListener('click',downloadNiveis);
+    const resetBtn=document.getElementById('cxdResetNiveis');
+    if(resetBtn) resetBtn.addEventListener('click',openResetModal);
     renderCrossDocking();
     let timer;
     window.addEventListener('resize',()=>{clearTimeout(timer);timer=setTimeout(syncCardHeights,120);});
@@ -3142,6 +3662,195 @@ initCampaigns();
 })();
 </script>
 
+
+<script>
+/* ===================== ANÁLISE OC (PROVA REAL DOS PRAZOS) ===================== */
+(function(){
+  if(typeof crossDockingPrazosData==='undefined') return;
+  const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+  const dayDiff=cxdCore.dayDiff;
+
+  /* Cada registro ganha os dias úteis de cada etapa (mesma régua do restante do portal). */
+  const registros=crossDockingPrazosData.map(r=>({
+    oc:String(r.oc||''),
+    nf:String(r.nf||''),
+    fornecedor:r.fornecedor||'',
+    marca:r.marca||'',
+    logo:r.logo||'',
+    dataOc:r.dataOc||'',
+    dataNf:r.dataNf||'',
+    dataEstoque:r.dataEstoque||'',
+    diasNf:(r.dataOc&&r.dataNf)?dayDiff(r.dataNf,r.dataOc):null,
+    diasEst:(r.dataNf&&r.dataEstoque)?dayDiff(r.dataEstoque,r.dataNf):null
+  })).map(r=>Object.assign(r,{diasTotal:(r.diasNf!=null&&r.diasEst!=null)?r.diasNf+r.diasEst:null}));
+
+  const marcas=[...new Set(registros.map(r=>r.marca))].filter(Boolean).sort();
+  const fornecedores=[...new Set(registros.map(r=>r.fornecedor))].filter(Boolean).sort();
+  const meta=new Map();
+  registros.forEach(r=>{
+    if(!meta.has(r.marca)) meta.set(r.marca,{marca:r.marca,logo:r.logo,fornecedor:r.fornecedor,count:0});
+    meta.get(r.marca).count++;
+  });
+  const metaOrdenado=[...meta.values()].sort((a,b)=>b.count-a.count);
+
+  const st={fornecedor:'',marca:'',oc:'',nf:'',deOc:'',ateOc:'',deNf:'',ateNf:'',deEst:'',ateEst:'',minDiasNf:'',maxDiasNf:'',minDiasEst:'',maxDiasEst:''};
+  let selecionados=new Set();
+  let pagina=1;
+  let porPagina=100;
+
+  const num=v=>{if(v===''||v===null||v===undefined) return null;const n=Number(v);return Number.isFinite(n)?n:null;};
+  const fmtData=v=>{const m=String(v||'').match(/^(\d{4})-(\d{2})-(\d{2})/);return m?`${m[3]}/${m[2]}/${m[1]}`:'';};
+  const contem=(valor,termo)=>!termo||String(valor||'').toLowerCase().indexOf(String(termo).toLowerCase().trim())>=0;
+  const noPeriodo=(data,de,ate)=>(!de||(data&&data>=de))&&(!ate||(data&&data<=ate));
+
+  function filtrar(){
+    return registros.filter(r=>{
+      if(selecionados.size&&!selecionados.has(r.marca)) return false;
+      if(st.fornecedor&&r.fornecedor!==st.fornecedor) return false;
+      if(st.marca&&r.marca!==st.marca) return false;
+      if(!contem(r.oc,st.oc)||!contem(r.nf,st.nf)) return false;
+      if(!noPeriodo(r.dataOc,st.deOc,st.ateOc)) return false;
+      if(!noPeriodo(r.dataNf,st.deNf,st.ateNf)) return false;
+      if(!noPeriodo(r.dataEstoque,st.deEst,st.ateEst)) return false;
+      const minNf=num(st.minDiasNf),maxNf=num(st.maxDiasNf);
+      if(minNf!=null&&(r.diasNf==null||r.diasNf<minNf)) return false;
+      if(maxNf!=null&&(r.diasNf==null||r.diasNf>maxNf)) return false;
+      const minEst=num(st.minDiasEst),maxEst=num(st.maxDiasEst);
+      if(minEst!=null&&(r.diasEst==null||r.diasEst<minEst)) return false;
+      if(maxEst!=null&&(r.diasEst==null||r.diasEst>maxEst)) return false;
+      return true;
+    });
+  }
+
+  function classeDia(v){
+    if(v==null) return '';
+    if(v<=5) return 'good';
+    if(v<=10) return 'warn';
+    return 'bad';
+  }
+  const fmt1=v=>v==null?'–':v.toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1});
+
+  function renderHeroStats(rows){
+    const host=document.getElementById('analiseHeroStats');
+    if(!host) return;
+    const comCiclo=rows.filter(r=>r.diasNf!=null&&r.diasEst!=null);
+    const avg=(arr,k)=>arr.length?arr.reduce((s,r)=>s+r[k],0)/arr.length:null;
+    const stats=[
+      {value:rows.length,label:'REGISTROS NO RECORTE'},
+      {value:comCiclo.length,label:'COM CICLO COMPLETO'},
+      {value:(avg(comCiclo,'diasNf')!=null?fmt1(avg(comCiclo,'diasNf'))+' du':'–'),label:'MÉDIA OC → NF'},
+      {value:(avg(comCiclo,'diasEst')!=null?fmt1(avg(comCiclo,'diasEst'))+' du':'–'),label:'MÉDIA NF → ESTOQUE'}
+    ];
+    host.innerHTML=stats.map(s=>`<div class="log-hero-stat"><div class="log-hs-value">${s.value}</div><div class="log-hs-label">${s.label}</div></div>`).join('');
+  }
+
+  function renderSupplierFilters(){
+    const wrap=document.getElementById('analiseSupplierFilters');
+    if(!wrap) return;
+    wrap.innerHTML=metaOrdenado.map(m=>{
+      const ativo=selecionados.has(m.marca);
+      const init=`<span class="log-supplier-init"${m.logo?' style="display:none"':''}>${esc(m.marca.substring(0,3))}</span>`;
+      const img=m.logo?`<img src="logos-marcas/${encodeURI(m.logo)}" alt="${esc(m.marca)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'">`:'';
+      return `<button class="log-supplier-btn${ativo?' active':''}" type="button" data-marca="${esc(m.marca)}" title="${esc(m.fornecedor)} (${m.count})" aria-label="Filtrar por ${esc(m.marca)}">${img}${init}<span class="log-supplier-count">${m.count}</span></button>`;
+    }).join('');
+    wrap.querySelectorAll('[data-marca]').forEach(btn=>btn.addEventListener('click',()=>{
+      const k=btn.dataset.marca;
+      if(selecionados.has(k)) selecionados.delete(k); else selecionados=new Set([k]);
+      pagina=1;
+      render();
+    }));
+  }
+
+  function renderTable(rows){
+    const body=document.getElementById('anBody');
+    if(!body) return;
+    const paginas=Math.max(1,Math.ceil(rows.length/porPagina));
+    if(pagina>paginas) pagina=paginas;
+    if(pagina<1) pagina=1;
+    const inicio=(pagina-1)*porPagina;
+    const fatia=rows.slice(inicio,inicio+porPagina);
+    if(!fatia.length){
+      body.innerHTML='<tr><td colspan="9"><div class="log-empty">Nenhum registro para os filtros selecionados.</div></td></tr>';
+    }else{
+      body.innerHTML=fatia.map(r=>{
+        const img=r.logo?`<img src="logos-marcas/${encodeURI(r.logo)}" alt="${esc(r.marca)}" loading="lazy" onerror="this.style.display='none'">`:'';
+        return `<tr>
+          <td><div class="an-fornecedor" title="${esc(r.fornecedor)}">${img}<span>${esc(r.marca)}<small>${esc(r.fornecedor)}</small></span></div></td>
+          <td class="an-num">${esc(r.oc)}</td>
+          <td class="an-num">${esc(r.nf||'–')}</td>
+          <td class="an-num">${esc(fmtData(r.dataOc)||'–')}</td>
+          <td class="an-num">${esc(fmtData(r.dataNf)||'–')}</td>
+          <td class="an-num">${esc(fmtData(r.dataEstoque)||'–')}</td>
+          <td class="an-days ${classeDia(r.diasNf)}">${r.diasNf==null?'–':r.diasNf}</td>
+          <td class="an-days ${classeDia(r.diasEst)}">${r.diasEst==null?'–':r.diasEst}</td>
+          <td class="an-days an-total">${r.diasTotal==null?'–':r.diasTotal}</td>
+        </tr>`;
+      }).join('');
+    }
+    const info=document.getElementById('anPageInfo');
+    if(info) info.textContent=rows.length?`Exibindo ${inicio+1}–${Math.min(inicio+porPagina,rows.length)} de ${rows.length} registros (página ${pagina} de ${paginas})`:'Nenhum registro';
+    const prev=document.getElementById('anPrev');
+    const next=document.getElementById('anNext');
+    if(prev) prev.disabled=pagina<=1;
+    if(next) next.disabled=pagina>=paginas;
+  }
+
+  function render(){
+    const rows=filtrar();
+    renderSupplierFilters();
+    renderHeroStats(rows);
+    renderTable(rows);
+    const rc=document.getElementById('anResultCount');
+    if(rc) rc.textContent=`${rows.length} registros · ${new Set(rows.map(r=>r.fornecedor)).size} fornecedores`;
+  }
+
+  function fillSelects(){
+    const selF=document.getElementById('anFornecedor');
+    const selM=document.getElementById('anMarca');
+    if(selF) selF.innerHTML='<option value="">Todos</option>'+fornecedores.map(f=>`<option value="${esc(f)}">${esc(f)}</option>`).join('');
+    if(selM) selM.innerHTML='<option value="">Todas</option>'+marcas.map(m=>`<option value="${esc(m)}">${esc(m)}</option>`).join('');
+  }
+
+  function bindFilters(){
+    const map=[
+      ['anFornecedor','fornecedor'],['anMarca','marca'],['anOc','oc'],['anNf','nf'],
+      ['anDeOc','deOc'],['anAteOc','ateOc'],['anDeNf','deNf'],['anAteNf','ateNf'],
+      ['anDeEst','deEst'],['anAteEst','ateEst'],['anMinDiasNf','minDiasNf'],['anMaxDiasNf','maxDiasNf'],
+      ['anMinDiasEst','minDiasEst'],['anMaxDiasEst','maxDiasEst']
+    ];
+    map.forEach(([id,key])=>{
+      const el=document.getElementById(id);
+      if(!el) return;
+      const ev=el.tagName==='SELECT'?'change':'input';
+      el.addEventListener(ev,()=>{st[key]=el.value;pagina=1;render();});
+    });
+    const clearAll=document.getElementById('anClearFilters');
+    if(clearAll) clearAll.addEventListener('click',()=>{
+      Object.keys(st).forEach(k=>st[k]='');
+      selecionados=new Set();
+      pagina=1;
+      map.forEach(([id])=>{const el=document.getElementById(id);if(el) el.value='';});
+      render();
+    });
+    const clearSup=document.getElementById('analiseClearSuppliers');
+    if(clearSup) clearSup.addEventListener('click',()=>{selecionados=new Set();pagina=1;render();});
+    const size=document.getElementById('anPageSize');
+    if(size) size.addEventListener('change',()=>{porPagina=Number(size.value)||100;pagina=1;render();});
+    const prev=document.getElementById('anPrev');
+    if(prev) prev.addEventListener('click',()=>{if(pagina>1){pagina--;render();}});
+    const next=document.getElementById('anNext');
+    if(next) next.addEventListener('click',()=>{pagina++;render();});
+  }
+
+  function init(){
+    fillSelects();
+    bindFilters();
+    render();
+  }
+  window.cxdRenderAnalise=render;
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
+})();
+</script>
 
 <script>
 /* ===================== DESEMPENHO LOGÍSTICO DOS FORNECEDORES ===================== */
@@ -3184,7 +3893,7 @@ initCampaigns();
 
   function geralStatusOf(levels,realAvg){
     if(realAvg==null) return null;
-    const P=levels.map(l=>Number(l.prazo)).filter(Number.isFinite);
+    const P=levels.map(l=>cxdCore.nivelAtual(l)).filter(Number.isFinite);
     if(!P.length) return null;
     const below=P.filter(p=>p<realAvg).length;
     if(below===P.length) return 'red';
@@ -3196,14 +3905,15 @@ initCampaigns();
   function geralLevelCompact(row,realAvg){
     const op=String(row.operador||'').toUpperCase();
     const general=!row.preco||!row.custo||op==='GERAL'||op.includes('PRODU');
-    const headroom=realAvg!=null&&Number(row.prazo)>realAvg;
+    const prazo=cxdCore.nivelAtual(row);
+    const headroom=realAvg!=null&&prazo>realAvg;
     const hr=headroom?' lgl-headroom':'';
     if(general){
       const label=op.includes('PRODU')?'Produtos em produção':'Regra geral';
-      return `<div class="log-geral-level lgl-general${hr}"><span class="log-geral-days">${esc(row.prazo)}<small>du</small></span><span class="log-geral-rule">${esc(label)}</span></div>`;
+      return `<div class="log-geral-level lgl-general${hr}"><span class="log-geral-days">${esc(prazo)}<small>du</small></span><span class="log-geral-rule">${esc(label)}</span></div>`;
     }
     const condition=op==='ABAIXO'?'Abaixo de':'A partir de';
-    return `<div class="log-geral-level${hr}"><span class="log-geral-days">${esc(row.prazo)}<small>du</small></span><span class="log-geral-rule">${esc(condition)} ${money(row.preco)}</span><span class="log-geral-cost">${money(row.custo)}</span></div>`;
+    return `<div class="log-geral-level${hr}"><span class="log-geral-days">${esc(prazo)}<small>du</small></span><span class="log-geral-rule">${esc(condition)} ${money(row.preco)}</span><span class="log-geral-cost">${money(row.custo)}</span></div>`;
   }
 
   const COLORS={
@@ -3585,6 +4295,16 @@ initCampaigns();
         addGroup(key,row.fornecedor,row.image,row.ordem,row.marca||row.fornecedor).niveis.push(row);
       }
     });
+    /* Fornecedores que já possuem dados na base (planilha) mas ainda não têm níveis
+       de corte configurados entram na Visão Geral para não ficarem de fora da comparação. */
+    const conhecidos=new Set(map.keys());
+    let extra=1000;
+    crossDockingPrazosData.forEach(r=>{
+      const key=realKeyOf(r);
+      if(conhecidos.has(key)) return;
+      conhecidos.add(key);
+      addGroup(key,r.fornecedor,r.logo,extra++,r.marca||r.fornecedor);
+    });
     return [...map.values()].sort((a,b)=>a.ordem-b.ordem);
   }
   function geralRealByLogo(){
@@ -3608,22 +4328,25 @@ initCampaigns();
   }
   function configRef(group){
     const ger=group.niveis.find(x=>/GERAL|PRODU/i.test(x.operador||''));
-    if(ger) return Number(ger.prazo);
-    const vals=group.niveis.map(r=>Number(r.prazo)).filter(Number.isFinite);
+    if(ger) return cxdCore.nivelAtual(ger);
+    const vals=group.niveis.map(r=>cxdCore.nivelAtual(r)).filter(Number.isFinite);
     return vals.length?Math.min(...vals):null;
   }
   function renderGeralSupplierFilters(){
     const wrap=document.getElementById('geralSupplierFilters');
     if(!wrap) return;
     const configs=geralBrandsConfig();
+    const real=geralRealByLogo();
     wrap.innerHTML=configs.map(g=>{
       const key=geralKey(g);
       const active=geralSelected.has(key);
+      const rd=real.get(key);
+      const quantidade=g.niveis.length||(rd?rd.n:0);
       const init=`<span class="log-supplier-init"${g.image?' style="display:none"':''}>${esc((g.marca||g.fornecedor).substring(0,3))}</span>`;
       const img=g.image?`<img src="logos-marcas/${encodeURI(g.image)}" alt="${esc(g.marca||g.fornecedor)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'">`:'';
       const tag=tramontinaTag(key);
       const tagHtml=tag?tag:'';
-      return `<button class="log-supplier-btn${active?' active':''}${tag?' log-supplier-btn--tag':''}" type="button" data-key="${esc(key)}" title="${esc(g.marca||g.fornecedor)}" aria-label="Filtrar por ${esc(g.marca||g.fornecedor)}">${img}${init}${tagHtml}<span class="log-supplier-count">${g.niveis.length}</span></button>`;
+      return `<button class="log-supplier-btn${active?' active':''}${tag?' log-supplier-btn--tag':''}" type="button" data-key="${esc(key)}" title="${esc(g.marca||g.fornecedor)}" aria-label="Filtrar por ${esc(g.marca||g.fornecedor)}">${img}${init}${tagHtml}<span class="log-supplier-count">${quantidade}</span></button>`;
     }).join('');
     wrap.querySelectorAll('.log-supplier-btn').forEach(btn=>btn.addEventListener('click',()=>{
       const k=btn.dataset.key;
@@ -3647,7 +4370,7 @@ initCampaigns();
       const rd=real.get(key)||null;
       const ref=configRef(g);
       const realAvg=rd?rd.tot:null;
-      const prazos=[...new Set(g.niveis.map(r=>Number(r.prazo)).filter(Number.isFinite))].sort((a,b)=>a-b);
+      const prazos=[...new Set(g.niveis.map(r=>cxdCore.nivelAtual(r)).filter(Number.isFinite))].sort((a,b)=>a-b);
       const levels=g.niveis.slice().sort((a,b)=>a.ordem-b.ordem);
       return {label:g.marca||g.fornecedor,image:g.image,prazos,ref,rd,levels,realAvg,status:geralStatusOf(levels,realAvg)};
     });
@@ -3760,6 +4483,7 @@ initCampaigns();
       document.querySelectorAll('.cxd-subpanel').forEach(p=>p.classList.toggle('active',p.id==='cxd-panel-'+btn.dataset.cxdTab));
       if(btn.dataset.cxdTab==='logistico'){renderLogistico();}
       else if(btn.dataset.cxdTab==='geral'){renderVisaoGeral();}
+      else if(btn.dataset.cxdTab==='analise'){if(typeof window.cxdRenderAnalise==='function') window.cxdRenderAnalise();}
     }));
     document.getElementById('logClearSuppliers').addEventListener('click',()=>{selected=new Set();renderLogistico();});
     document.getElementById('logClearFilters').addEventListener('click',clearAllFilters);
@@ -3778,6 +4502,7 @@ initCampaigns();
     renderVisaoGeral();
     renderLogistico();
   }
+  window.cxdRenderGeral=renderVisaoGeral;
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',initLogistico); else initLogistico();
 })();
 </script>
