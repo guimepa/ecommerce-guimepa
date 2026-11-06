@@ -45,17 +45,20 @@ OVERRIDES_JSON = os.path.join(ROOT, "crossdocking-overrides.json")
 # mapa fornecedor -> (marca, logo em logos-marcas/)
 # ---------------------------------------------------------------------------
 MARCA_LOGO = {
+    "AUTOMOZ COMERCIAL DISTRIBUIDORA LTDA": ("AUTOMOZ", "automoz.png"),
     "BEL FIX IMPORTACAO LTDA": ("BELFIX", "Bel.png"),
     "BETA DO BRASIL COM. MAQ. E FER.LTDA": ("BETA", "Beta.png"),
     "BRANCO MOTORES LTDA": ("BRANCO", "Branco.png"),
     "BRINOX METALURGICA SA": ("BRINOX", "Brinox.png"),
     "BRITANIA ELETRODOMESTICOS SA": ("BRITANIA", "britania.png"),
     "BUFFALO MOTORES E ACOPLADOS LTDA": ("BUFFALO", "Buffalo.png"),
+    "CARTONALE IND E BENEF DE MATERIAIS PLASTICOS LTDA": ("CARTONALE", "cartonale.png"),
     "CCM MAQUINAS E MOTORES LTDA": ("CCM", "CCM.png"),
     "CHIAPERINI INDUSTRIAL LTDA": ("CHIAPERINI", "Chiaperini.png"),
     "CSM-COMPONENTES SISTEMAS E MAQUINAS PARA CONSTRUCAO LTDA": ("CSM", "CSM.png"),
     "FERRAGENS NEGRAO COM LTDA": ("NEGRAO", "WORKER.png"),
     "FERRAGENS NEGRAO COMERCIAL LTDA": ("NEGRAO", "WORKER.png"),
+    "FORTIS CARRINHOS INDUSTRIAIS LTDA": ("FORTIS", "fortis.png"),
     "FRESNOMAQ INDUSTRIA DE MAQUINAS SA": ("FRESNOMAQ MAQUINAS", "Wap.png"),
     "FRESNOMAQ MAQUINAS": ("FRESNOMAQ MAQUINAS", "Wap.png"),
     "FRICKE SOLDAS LTDA": ("FRICKE SOLDAS LTDA", "Balmer.png"),
@@ -69,6 +72,7 @@ MARCA_LOGO = {
     "ROBERT BOSCH LIMITADA": ("BOSCH", "Bosch.png"),
     "TOOLS WORLD LLC MUNDO DAS FERRAMENTAS DO BRASIL LTDA": ("TOOLS WORLD", "MTX.png"),
     "TOYAMA DO BRASIL MAQUINAS LTDA": ("TOYAMA", "Toyama.png"),
+    "TRADESTAR IMPORTACAO E EXPORTACAO LTDA": ("TRADESTAR", "tradestar.png"),
     "TRAMONTINA SUL SA": ("TRAMONTINA", "Tramontina.png"),
     "WORKER COMERCIO DE FERRAMENTAS LTDA": ("NEGRAO", "WORKER.png"),
     "WTEC MOVEIS E EQUIPAMENTOS TECNICOS LTDA": ("WTEC MOVEIS E EQUIPAMENTOS TECNICOS LTDA", "PRESTO.png"),
@@ -80,6 +84,18 @@ TRAMONTINA_FERR = "TRAMONTINA FERRAMENTAS"
 # heurística para registros novos (volume de itens da OC)
 TRAMONTINA_CASA_MIN_ITENS = 15
 
+# razão social antiga/alternativa -> nome canônico usado no mapa acima
+FORNECEDOR_ALIASES = {
+    "TRAMONTINA SUL LTDA": TRAMONTINA,
+}
+
+# diagnóstico da última resolução (nome bruto -> canônico), usado no relatório
+RESOLUCOES = {}
+# divergências entre a coluna "image" da planilha e o logo do mapa
+DIVERGENCIAS_LOGO = {}
+# linhas repetidas (mesma OC/NF) consolidadas na última execução
+DEDUPE_REMOVIDOS = 0
+
 
 # ---------------------------------------------------------------------------
 # helpers
@@ -88,6 +104,91 @@ def norm_fornecedor(value):
     if value is None:
         return ""
     return re.sub(r"\s+", " ", str(value)).strip().upper()
+
+
+def logo_key(value):
+    """Chave de comparação de logo: minúscula, sem diretório e sem extensão."""
+    s = str(value or "").strip().replace("\\", "/").split("/")[-1].lower()
+    return re.sub(r"\.\w+$", "", s)
+
+
+def parse_int(value):
+    """Converte quantidades da planilha ("13", 13, "1.200", "1.200,5") em int."""
+    if value is None or value == "":
+        return 0
+    if isinstance(value, (int, float)):
+        return int(value)
+    s = re.sub(r"[^\d,.\-]", "", str(value))
+    if not s:
+        return 0
+    if "," in s:
+        s = s.replace(".", "").replace(",", ".")
+    elif s.count(".") > 1:
+        s = s.replace(".", "")
+    try:
+        return int(float(s))
+    except ValueError:
+        return 0
+
+
+def _prefixo_comum(a, b):
+    n = min(len(a), len(b))
+    i = 0
+    while i < n and a[i] == b[i]:
+        i += 1
+    return i
+
+
+def resolve_fornecedor(value):
+    """Resolve o nome da planilha para a chave canônica de MARCA_LOGO.
+
+    A planilha é preenchida à mão e às vezes concatena uma observação ao nome
+    do fornecedor ("MAKITA ... LTDAFALTOU ITENS") ou traz o nome truncado
+    ("O.V.D IMPORTADORA E DISTRIBUID"). Este resolvedor tolera os dois casos.
+    Retorna None quando não há correspondência segura.
+    """
+    nome = norm_fornecedor(value)
+    if not nome:
+        return ""
+    if nome in MARCA_LOGO or nome == TRAMONTINA:
+        return nome
+    if nome in FORNECEDOR_ALIASES:
+        canonico = FORNECEDOR_ALIASES[nome]
+        RESOLUCOES[nome] = canonico
+        return canonico
+
+    # nome como aparece na planilha -> chave canônica do mapa
+    conhecidos = {k: k for k in MARCA_LOGO}
+    conhecidos[TRAMONTINA] = TRAMONTINA
+    for alias, canonico in FORNECEDOR_ALIASES.items():
+        conhecidos[alias] = canonico
+
+    # 1) nome completo + observação colada no final
+    candidatos = [k for k in conhecidos if nome.startswith(k)]
+    if candidatos:
+        canonico = conhecidos[max(candidatos, key=len)]
+        RESOLUCOES[nome] = canonico
+        return canonico
+
+    # 2) nome truncado
+    candidatos = [k for k in conhecidos if k.startswith(nome) and len(nome) >= 12]
+    if candidatos:
+        canonico = conhecidos[min(candidatos, key=len)]
+        RESOLUCOES[nome] = canonico
+        return canonico
+
+    # 3) nome truncado + observação
+    melhor, melhor_lcp = None, 0
+    for k in conhecidos:
+        lcp = _prefixo_comum(nome, k)
+        if lcp > melhor_lcp:
+            melhor, melhor_lcp = k, lcp
+    if melhor and melhor_lcp >= 18 and melhor_lcp >= 0.55 * min(len(nome), len(melhor)):
+        canonico = conhecidos[melhor]
+        RESOLUCOES[nome] = canonico
+        return canonico
+
+    return None
 
 
 def dstr(value):
@@ -185,9 +286,13 @@ def read_sheet(xlsx_path):
 
 def build_records(raw, labels):
     records = []
+    nao_resolvidos = {}
     for values in raw:
-        fornecedor = norm_fornecedor(values[9])
+        fornecedor = resolve_fornecedor(values[9])
         if not fornecedor:
+            nao_resolvidos[norm_fornecedor(values[9])] = (
+                nao_resolvidos.get(norm_fornecedor(values[9]), 0) + 1
+            )
             continue
         # a planilha consolida várias OCs na mesma NF (separadas por "," ou ".");
         # cada OC vira um registro próprio
@@ -201,7 +306,7 @@ def build_records(raw, labels):
                 "oc": oc,
                 "ocRaw": oc_raw,
                 "fornecedor": fornecedor,
-                "itens": values[5] or 0,
+                "itens": parse_int(values[5]),
                 "dataOc": dstr(values[2]),
                 "dataNf": dstr(values[3]),
                 "dataEstoque": dstr(values[4]),
@@ -217,9 +322,47 @@ def build_records(raw, labels):
                         "Fornecedor sem mapa de marca/logo: %r (adicione em MARCA_LOGO)" % fornecedor
                     )
                 row["marca"], row["logo"] = marca_logo
+            img = logo_key(values[10]) if len(values) > 10 else ""
+            if img and img != logo_key(row["logo"]):
+                chave = (norm_fornecedor(values[9]), row["logo"], str(values[10]))
+                DIVERGENCIAS_LOGO[chave] = DIVERGENCIAS_LOGO.get(chave, 0) + 1
             records.append(row)
+    if nao_resolvidos:
+        detalhe = "\n".join(
+            "  %3d x %s" % (n, nome) for nome, n in sorted(nao_resolvidos.items())
+        )
+        raise SystemExit(
+            "Fornecedor(es) sem mapa de marca/logo. Adicione em MARCA_LOGO "
+            "(ou em FORNECEDOR_ALIASES):\n%s" % detalhe
+        )
+    records = dedupe_oc_nf(records)
     records.sort(key=sort_key)
     return records
+
+
+def dedupe_oc_nf(records):
+    """Consolida a mesma OC/NF repetida na planilha.
+
+    A planilha traz a linha agrupada ("OC 49246,49248,49249 | NF 208015") e
+    também a linha individual de cada OC; sem consolidar, a mesma OC apareceria
+    duas vezes na Análise OC. Quando há repetição, prevalece a linha individual
+    (data de emissão da própria OC) e, depois, a mais completa.
+    """
+    grupos = defaultdict(list)
+    for rec in records:
+        grupos[(rec["oc"], rec["nf"], rec["marca"])].append(rec)
+
+    def score(rec):
+        individual = 1 if len(re.findall(r"\d{4,6}", rec["ocRaw"])) <= 1 else 0
+        datas = sum(1 for d in (rec["dataOc"], rec["dataNf"], rec["dataEstoque"]) if d)
+        return (individual, datas, rec["dataOc"])
+
+    out = []
+    for itens in grupos.values():
+        out.append(max(itens, key=score) if len(itens) > 1 else itens[0])
+    global DEDUPE_REMOVIDOS
+    DEDUPE_REMOVIDOS = sum(len(v) - 1 for v in grupos.values())
+    return out
 
 
 def write_prazos_js(records):
@@ -324,17 +467,18 @@ def update_config_js(records, stats):
     existing_logos = {str(e.get("image") or "").lower() for e in entries}
     next_order = max((e["ordem"] for e in entries), default=0) + 1
 
-    # marca -> (fornecedor, logo) a partir da base
-    marca_fornecedor = {}
-    for rec in records:
-        marca_fornecedor.setdefault(rec["marca"], rec["fornecedor"])
-
     added = []
-    for marca, info in sorted(stats.items()):
-        logo = logo_of(records, marca)
+    marcas_base = {}
+    for rec in records:
+        marcas_base.setdefault(rec["marca"], rec["logo"])
+    # todo fornecedor presente na base precisa existir na configuração,
+    # mesmo os que ainda não têm ciclo completo (sem média real)
+    for marca in sorted(marcas_base):
+        logo = marcas_base[marca]
         if not logo or logo.lower() in existing_logos:
             continue
-        prazo = max(1, int(math.ceil(info["media"])))
+        info = stats.get(marca)
+        prazo = max(1, int(math.ceil(info["media"]))) if info else 1
         entries.append(
             {
                 "ordem": next_order,
@@ -350,7 +494,7 @@ def update_config_js(records, stats):
         existing.add(marca)
         existing_logos.add(logo.lower())
         next_order += 1
-        added.append((marca, logo, prazo))
+        added.append((marca, logo, prazo, info is not None))
 
     if not added and not overrides:
         return added, entries
@@ -358,13 +502,6 @@ def update_config_js(records, stats):
     entries.sort(key=lambda e: e["ordem"])
     write_config_js(entries)
     return added, entries
-
-
-def logo_of(records, marca):
-    for rec in records:
-        if rec["marca"] == marca:
-            return rec["logo"]
-    return None
 
 
 def write_config_js(entries):
@@ -411,10 +548,34 @@ def main():
 
     print("Registros gravados em crossdocking-prazos-data.js: %d" % total)
     print("Fornecedores na base: %d" % len({r["fornecedor"] for r in records}))
+    if DEDUPE_REMOVIDOS:
+        print(
+            "Linhas repetidas consolidadas (mesma OC/NF): %d" % DEDUPE_REMOVIDOS
+        )
+    if RESOLUCOES:
+        print("Nomes da planilha normalizados (%d variacoes):" % len(RESOLUCOES))
+        for bruto, canonico in sorted(RESOLUCOES.items()):
+            print("  - %s  ->  %s" % (bruto, canonico))
+    if DIVERGENCIAS_LOGO:
+        print("AVISO: logo do mapa diferente da coluna 'image' da planilha:")
+        for (bruto, esperado, achado), n in sorted(DIVERGENCIAS_LOGO.items()):
+            print("  - %3d x %s: mapa=%s / planilha=%s" % (n, bruto, esperado, achado))
+    faltando = sorted(
+        {
+            r["logo"]
+            for r in records
+            if not os.path.exists(os.path.join(ROOT, "logos-marcas", r["logo"]))
+        }
+    )
+    if faltando:
+        print("AVISO: logos ausentes em logos-marcas/ (adicione os arquivos):")
+        for logo in faltando:
+            print("  - %s" % logo)
     if added:
         print("Niveis de corte inseridos (fornecedores novos):")
-        for fornecedor, logo, prazo in added:
-            print("  - %s [%s] (%s dias)" % (fornecedor, logo, prazo))
+        for fornecedor, logo, prazo, com_media in added:
+            nota = "" if com_media else " - sem ciclo completo na base"
+            print("  - %s [%s] (%s dias%s)" % (fornecedor, logo, prazo, nota))
     else:
         print("Nenhum fornecedor novo para incluir nos niveis de corte.")
 

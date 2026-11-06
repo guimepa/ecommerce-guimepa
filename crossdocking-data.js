@@ -425,5 +425,45 @@ const crossDockingData = [
     "operador": "GERAL",
     "preco": null,
     "custo": null
+  },
+  {
+    "ordem": 49,
+    "fornecedor": "AUTOMOZ",
+    "marca": "AUTOMOZ",
+    "image": "automoz.png",
+    "prazo": 1,
+    "operador": "GERAL",
+    "preco": null,
+    "custo": null
+  },
+  {
+    "ordem": 50,
+    "fornecedor": "CARTONALE",
+    "marca": "CARTONALE",
+    "image": "cartonale.png",
+    "prazo": 12,
+    "operador": "GERAL",
+    "preco": null,
+    "custo": null
+  },
+  {
+    "ordem": 51,
+    "fornecedor": "FORTIS",
+    "marca": "FORTIS",
+    "image": "fortis.png",
+    "prazo": 1,
+    "operador": "GERAL",
+    "preco": null,
+    "custo": null
+  },
+  {
+    "ordem": 52,
+    "fornecedor": "TRADESTAR",
+    "marca": "TRADESTAR",
+    "image": "tradestar.png",
+    "prazo": 3,
+    "operador": "GERAL",
+    "preco": null,
+    "custo": null
   }
 ];

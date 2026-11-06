@@ -73,8 +73,17 @@ python tools/update-crossdocking.py ["caminho\Cross Docking Prazos Fornecedor.xl
 
 O script lê a planilha (fonte da verdade) e regrava `crossdocking-prazos-data.js`. Em `crossdocking-data.js`
 ele preserva os níveis já configurados, aplica `crossdocking-overrides.json` (se existir) e inclui
-fornecedores novos com prazo inicial = média real arredondada para cima. A classificação
-CASA/FERRAMENTAS da Tramontina é herdada do JS anterior; registros novos usam heurística por volume de itens.
+fornecedores novos com prazo inicial = média real arredondada para cima (ou 1 dia quando ainda não há
+ciclo completo). A classificação CASA/FERRAMENTAS da Tramontina é herdada do JS anterior; registros novos
+usam heurística por volume de itens.
+
+O gerador também trata as imperfeições da planilha:
+
+- normaliza o nome do fornecedor quando a célula traz observação colada ou nome truncado
+  (`MAKITA ... LTDAFALTOU ITENS`, `O.V.D IMPORTADORA E DISTRIBUID`) e relata cada conversão;
+- consolida a mesma OC/NF repetida (linha agrupada `49246,49248,49249` + linha individual), mantendo a
+  linha individual e evitando contagem dupla na Análise OC;
+- avisa quando falta o arquivo de logo em `logos-marcas/`.
 
 ## Convenções importantes
 
