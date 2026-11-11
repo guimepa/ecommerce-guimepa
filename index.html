@@ -4106,14 +4106,35 @@ initCampaigns();
       const ago=new Date(); ago.setDate(ago.getDate()-30);
       cutoff=ago.getFullYear()+'-'+String(ago.getMonth()+1).padStart(2,'0')+'-'+String(ago.getDate()).padStart(2,'0');
     }
+    // Semanas recentes ainda em andamento (OCs sem entrada em estoque) distorcem a
+    // média para baixo: só as OCs rápidas concluíram. Para não dar a impressão de
+    // queda artificial no fim do gráfico, entram apenas semanas "maduras" (>= 85%
+    // das OCs já recebidas no estoque) e nunca a semana corrente.
+    const weekTotal=new Map(), weekDone=new Map();
+    baseRows.forEach(r=>{
+      if(!r.dataOc) return;
+      if(cutoff && r.dataOc<cutoff) return;
+      const w=isoWeek(pld(r.dataOc));
+      weekTotal.set(w,(weekTotal.get(w)||0)+1);
+      if(r.dataEstoque) weekDone.set(w,(weekDone.get(w)||0)+1);
+    });
+    const thisWeek=isoWeek(new Date());
+    const isMature=w=>{
+      if(w===thisWeek) return false;
+      const tot=weekTotal.get(w)||0, done=weekDone.get(w)||0;
+      return tot>0 && done/tot>=0.85;
+    };
+    let omitted=0;
     let minDate=null,maxDate=null;
     const pts=[];
     rows.forEach(r=>{
       if(cutoff && r.dataOc<cutoff) return;
+      const w=isoWeek(pld(r.dataOc));
+      if(!isMature(w)){omitted++;return;}
       const d=dayDiff(r.dataEstoque,r.dataOc);if(!validTotal(d))return;
       if(!minDate||r.dataOc<minDate)minDate=r.dataOc;
       if(!maxDate||r.dataOc>maxDate)maxDate=r.dataOc;
-      pts.push({w:isoWeek(pld(r.dataOc)),oc:r.dataOc,d});
+      pts.push({w,oc:r.dataOc,d});
     });
     const note=document.getElementById('logEvolNote');
     if(pts.length<2){
@@ -4161,7 +4182,8 @@ initCampaigns();
     const avgY=y(avgAll);
     const firstX=x(0),lastX=x(n-1);
     const mun=evolPeriod==='30d'?' (últimos 30 dias de OC)':'';
-    if(note) note.textContent=`${minDate} → ${maxDate}${mun}`;
+    const omitNote=omitted?` · ${omitted} OC(s) de semanas recentes ainda em andamento omitidas`:'';
+    if(note) note.textContent=`${minDate} → ${maxDate}${mun}${omitNote}`;
     host.innerHTML=`<div class="log-legend"><span><i style="background:#2563eb"></i>Média semanal (dias úteis)</span><span style="border-top:2px dashed #ef4444;height:0;padding-top:4px">Média geral (${fmt1(avgAll)} dias úteis)</span></div><svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Evolução do tempo total por semana (dias úteis)">
       ${grid}
       ${months}
