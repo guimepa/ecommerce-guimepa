@@ -74,8 +74,9 @@ python tools/update-crossdocking.py ["caminho\Cross Docking Prazos Fornecedor.xl
 O script lê a planilha (fonte da verdade) e regrava `crossdocking-prazos-data.js`. Em `crossdocking-data.js`
 ele preserva os níveis já configurados, aplica `crossdocking-overrides.json` (se existir) e inclui
 fornecedores novos com prazo inicial = média real arredondada para cima (ou 1 dia quando ainda não há
-ciclo completo). A classificação CASA/FERRAMENTAS da Tramontina é herdada do JS anterior; registros novos
-usam heurística por volume de itens.
+ciclo completo). A tag **CASA/FERRAMENTAS** da Tramontina vem da coluna O (XLS) da planilha: preenchida →
+CASA, vazia → FERRAMENTAS. Vale para as duas razões sociais (TRAMONTINA SUL LTDA e TRAMONTINA SUL SA),
+tratadas como o mesmo fornecedor.
 
 O gerador também trata as imperfeições da planilha:
 

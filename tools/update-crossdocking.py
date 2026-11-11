@@ -81,8 +81,6 @@ MARCA_LOGO = {
 TRAMONTINA = "TRAMONTINA SUL SA"
 TRAMONTINA_CASA = "TRAMONTINA CASA"
 TRAMONTINA_FERR = "TRAMONTINA FERRAMENTAS"
-# heurística para registros novos (volume de itens da OC)
-TRAMONTINA_CASA_MIN_ITENS = 15
 
 # razão social antiga/alternativa -> nome canônico usado no mapa acima
 FORNECEDOR_ALIASES = {
@@ -230,44 +228,15 @@ def sort_key(rec):
     )
 
 
-def load_previous_labels():
-    """Histórico de classificação (Tramontina) a partir do JS já gerado."""
-    labels = {}
-    if not os.path.exists(PRAZOS_JS):
-        return labels
-    with open(PRAZOS_JS, encoding="utf-8") as fh:
-        text = fh.read()
-    for raw in re.findall(r'\{ "oc":.*?\}', text):
-        try:
-            obj = json.loads(raw)
-        except json.JSONDecodeError:
-            continue
-        if obj.get("fornecedor") != TRAMONTINA:
-            continue
-        marca = obj.get("marca")
-        if marca not in (TRAMONTINA_CASA, TRAMONTINA_FERR):
-            continue
-        if obj.get("nf"):
-            labels[("nf", str(obj["oc"]), str(obj["nf"]))] = marca
-        labels[("dt", obj.get("oc"), obj.get("dataOc"), obj.get("dataNf"), obj.get("dataEstoque"))] = marca
-    return labels
+def classify_tramontina(row):
+    """Tramontina: a coluna O (XLS) define a tag.
 
-
-def classify_tramontina(row, labels):
-    nf = "" if row["nf"] is None else str(row["nf"])
-    oc = str(row["oc"])
-    raw = str(row.get("ocRaw") or oc)
-    for chave_oc in (raw, oc):
-        hit = labels.get(("nf", chave_oc, nf))
-        if hit:
-            return hit
-        hit = labels.get(
-            ("dt", chave_oc, row["dataOc"], row["dataNf"], row["dataEstoque"])
-        )
-        if hit:
-            return hit
-    itens = row["itens"] or 0
-    return TRAMONTINA_CASA if itens >= TRAMONTINA_CASA_MIN_ITENS else TRAMONTINA_FERR
+    Coluna O preenchida  -> TRAMONTINA CASA
+    Coluna O vazia       -> TRAMONTINA FERRAMENTAS
+    Vale para as duas razões sociais (TRAMONTINA SUL LTDA e TRAMONTINA SUL SA),
+    que são o mesmo fornecedor. Regra exclusiva da Tramontina.
+    """
+    return TRAMONTINA_CASA if row.get("xls") else TRAMONTINA_FERR
 
 
 # ---------------------------------------------------------------------------
@@ -284,7 +253,7 @@ def read_sheet(xlsx_path):
     return raw
 
 
-def build_records(raw, labels):
+def build_records(raw):
     records = []
     nao_resolvidos = {}
     for values in raw:
@@ -313,7 +282,7 @@ def build_records(raw, labels):
                 "xls": bool(values[14]),
             }
             if fornecedor == TRAMONTINA:
-                row["marca"] = classify_tramontina(row, labels)
+                row["marca"] = classify_tramontina(row)
                 row["logo"] = "Tramontina.png"
             else:
                 marca_logo = MARCA_LOGO.get(fornecedor)
@@ -539,9 +508,8 @@ def main():
     if not os.path.exists(xlsx_path):
         raise SystemExit("Planilha nao encontrada: %s" % xlsx_path)
 
-    labels = load_previous_labels()
     raw = read_sheet(xlsx_path)
-    records = build_records(raw, labels)
+    records = build_records(raw)
     total = write_prazos_js(records)
     stats = supplier_real_stats(records)
     added, _entries = update_config_js(records, stats)
